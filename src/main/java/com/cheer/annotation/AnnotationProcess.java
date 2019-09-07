@@ -7,8 +7,6 @@ public class AnnotationProcess {
 		for(ClassDescription cd : classDescriptions.value()) {
 			System.out.println("Description: " + cd.description());
 		}
-		ClassDescription cd = Staff.class.getAnnotation(ClassDescription.class);
-		System.out.println("==="+cd.description());
 	}
 
 }
