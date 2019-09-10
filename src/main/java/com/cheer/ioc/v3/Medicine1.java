@@ -2,13 +2,11 @@ package com.cheer.ioc.v3;
 
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("medicine1")
 public class Medicine1 implements IMedicine{
 	
-	String name;
-
 	public String toString() {
-		return "name";
+		return "Medicine1";
 	}
 
 }

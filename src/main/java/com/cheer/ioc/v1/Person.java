@@ -1,15 +1,13 @@
 package com.cheer.ioc.v1;
 
 public class Person {
-	String name;
 	Medicine medicine;
 	
-	public Person(String name, Medicine medicine) {
-		this.name = name;
+	public Person(Medicine medicine) {
 		this.medicine = medicine;
 	}
 	
 	public void sicked() {
-		System.out.println(name + "生病了，需要吃药: " + medicine.toString());
+		System.out.println(this.medicine.toString());
 	}
 }
