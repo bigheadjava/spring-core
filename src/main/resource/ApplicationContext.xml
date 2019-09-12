@@ -13,4 +13,11 @@
 	<bean id="userBean" class="com.cheer.beans.UserBean" ></bean>
 	
 	<bean id="beanConfig" class="com.cheer.beans.java.BeanConfig"></bean> 
+	
+	<bean id="medicine1" class="com.cheer.beans.xml.Medicine1"></bean>
+	<bean id="medicine2" class="com.cheer.beans.xml.Medicine1"></bean>
+	<bean id="person" class="com.cheer.beans.xml.Person">
+		<property name="name" value="张三"></property>
+		<property name="medicine" ref="medicine1"></property>
+	</bean>
 </beans>
