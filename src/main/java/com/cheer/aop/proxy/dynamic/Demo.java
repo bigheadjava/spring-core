@@ -14,6 +14,6 @@ public class Demo {
 		
 		IService proxy = (IService) Proxy.newProxyInstance(service.getClass().getClassLoader(), new Class[] {IService.class}, handler);
 		proxy.service("spring");
-	}
+	} 
 
 }
