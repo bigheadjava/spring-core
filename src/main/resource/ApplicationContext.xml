@@ -8,16 +8,85 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="com.cheer.ioc" />
-	
-	<bean id="userBean" class="com.cheer.beans.UserBean" ></bean>
-	
-	<bean id="beanConfig" class="com.cheer.beans.java.BeanConfig"></bean> 
-	
+	<context:component-scan
+		base-package="com.cheer.ioc" />
+
+	<bean id="userBean" class="com.cheer.beans.UserBean"></bean>
+
+	<bean id="beanConfig" class="com.cheer.beans.java.BeanConfig"></bean>
+
 	<bean id="medicine1" class="com.cheer.beans.xml.Medicine1"></bean>
-	<bean id="medicine2" class="com.cheer.beans.xml.Medicine1"></bean>
+	<bean id="medicine2" class="com.cheer.beans.xml.Medicine2"></bean>
 	<bean id="person" class="com.cheer.beans.xml.Person">
 		<property name="name" value="张三"></property>
 		<property name="medicine" ref="medicine1"></property>
+	</bean>
+
+	<bean id="person_1" class="com.cheer.beans.xml.Person">
+		<constructor-arg index="0" value="构造器"></constructor-arg>
+		<constructor-arg index="1" ref="medicine2"></constructor-arg>
+	</bean>
+
+	<bean id="gardener_1" class="com.cheer.beans.xml.factory.Gardener"
+		factory-method="staticMakeFruit">
+		<constructor-arg index="0" value="Apple"></constructor-arg>
+	</bean>
+
+	<bean id="gardener_0" class="com.cheer.beans.xml.factory.Gardener"></bean>
+	<bean id="gardener_2" factory-bean="gardener_0"
+		factory-method="makeFruit">
+		<constructor-arg index="0" value="Orange"></constructor-arg>
+	</bean>
+
+	<bean id="collectionBean" class="com.cheer.beans.xml.collection.XmlCollection">
+		<property name="objArrays">
+			<array>
+				<value>12345</value>
+				<ref bean="userBean"/>
+				<bean class="com.cheer.beans.xml.factory.Apple"></bean>
+			</array>
+		</property>
+	
+		<property name="list">
+			<list>
+				<value>18</value>
+				<ref bean="userBean" />
+				<bean class="com.cheer.beans.xml.factory.Apple"></bean>
+			</list>
+		</property>
+		<property name="sets">
+			<set>
+				<value>99.99</value>
+				<ref bean="userBean" />
+				<bean class="com.cheer.beans.xml.factory.Apple"></bean>
+			</set>
+		</property>
+		<property name="map">
+			<map>
+				<entry key="key_1" value="100"></entry>
+				<entry key="key_2" value-ref="userBean"></entry>
+				<entry key="key_3">
+					<bean class="com.cheer.beans.xml.factory.Apple"></bean>
+				</entry>
+			</map>
+		</property>
+		
+		<property name="props">
+			<props>
+				<prop key="key_1">key_1's value</prop>
+				<prop key="key_2">key_2's value</prop>
+				<prop key="key_3">key_3's value</prop>
+			</props>
+		</property>
+		
+		<property name="date1" value="2019-09-01"></property>
+	</bean>
+	
+	<bean id="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.util.Date" value="com.cheer.beans.xml.prop_edit.CustomerProperty"></entry>
+			</map>
+		</property>
 	</bean>
 </beans>
