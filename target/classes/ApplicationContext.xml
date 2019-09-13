@@ -10,14 +10,14 @@
 
 	<context:component-scan
 		base-package="com.cheer.ioc" />
-
+		
 	<bean id="userBean" class="com.cheer.beans.UserBean"></bean>
 
 	<bean id="beanConfig" class="com.cheer.beans.java.BeanConfig"></bean>
 
 	<bean id="medicine1" class="com.cheer.beans.xml.Medicine1"></bean>
 	<bean id="medicine2" class="com.cheer.beans.xml.Medicine2"></bean>
-	<bean id="person" class="com.cheer.beans.xml.Person">
+	<bean id="person" class="com.cheer.beans.xml.Person" init-method="init" destroy-method="destroy">
 		<property name="name" value="张三"></property>
 		<property name="medicine" ref="medicine1"></property>
 	</bean>
@@ -38,15 +38,16 @@
 		<constructor-arg index="0" value="Orange"></constructor-arg>
 	</bean>
 
-	<bean id="collectionBean" class="com.cheer.beans.xml.collection.XmlCollection">
+	<bean id="collectionBean"
+		class="com.cheer.beans.xml.collection.XmlCollection">
 		<property name="objArrays">
 			<array>
 				<value>12345</value>
-				<ref bean="userBean"/>
+				<ref bean="userBean" />
 				<bean class="com.cheer.beans.xml.factory.Apple"></bean>
 			</array>
 		</property>
-	
+
 		<property name="list">
 			<list>
 				<value>18</value>
@@ -70,7 +71,7 @@
 				</entry>
 			</map>
 		</property>
-		
+
 		<property name="props">
 			<props>
 				<prop key="key_1">key_1's value</prop>
@@ -78,15 +79,19 @@
 				<prop key="key_3">key_3's value</prop>
 			</props>
 		</property>
-		
-		<property name="date1" value="2019-09-01"></property>
-	</bean>
-	
-	<bean id="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
-		<property name="customEditors">
-			<map>
-				<entry key="java.util.Date" value="com.cheer.beans.xml.prop_edit.CustomerProperty"></entry>
-			</map>
+
+		<!-- <property name="date1" value="2019-09-01"></property> -->
+		<property name="date1">
+			<bean factory-bean="dateFormat" factory-method="parse">
+				<constructor-arg value="01-09-2019"></constructor-arg>
+			</bean>
 		</property>
 	</bean>
+
+	<bean id="dateFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg index="0" value="dd-MM-yyyy"></constructor-arg>
+	</bean>
+	<!-- <bean id="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer"> 
+		<property name="customEditors"> <map> <entry key="java.util.Date" value="com.cheer.beans.xml.prop_edit.CustomerProperty"></entry> 
+		</map> </property> </bean> -->
 </beans>

@@ -29,5 +29,12 @@ public class Person {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	public void init() {
+		System.out.println("初始化代码....");
+	}
+	
+	public void destroy() {
+		System.out.println("销毁代码....");
+	}
 }
