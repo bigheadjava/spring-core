@@ -1,11 +1,10 @@
 package com.cheer.beans.xml.prop_edit;
 
+import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import org.springframework.beans.propertyeditors.PropertiesEditor;
-
-public class CustomerProperty extends PropertiesEditor {
+public class CustomerProperty extends PropertyEditorSupport {
 
 	private String pattern = "yyyy-MM-dd";
 
