@@ -11,6 +11,7 @@ public class BeanConfig {
 		return new IdCard();
 	}
 	
+	@Bean
 	public Person adultPerson() {
 		return new Person(createIdCard());
 	}

@@ -15,10 +15,6 @@ public class Demo {
 		Person person_1 = (Person) ctx.getBean("person_1");
 		System.out.println("Person name: " + person_1.getName());
 		System.out.println("Person medicine: " + person_1.getMedicine());
-		
-		Person person_2 = (Person) ctx.getBean("person_1");
-		System.out.println(person_1);
-		System.out.println(person_2);
 	}
 
 }

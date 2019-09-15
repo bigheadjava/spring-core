@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<!-- 配置自动扫描包 -->
+	<context:component-scan base-package="com.cheer" />
+	<!-- 自动为切面方法中匹配的方法所在的类生成代理对象 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- 目标对象 -->
+	<bean id="aopService" class="com.cheer.aop.advice.AOPServiceImpl" >
+		<property name="description" value="qqq"></property>
+	</bean>
+	<!-- 切面 -->
+	<bean id="myLog" class="com.cheer.aop.advice.MyLog"></bean>
+	<!-- Advice通知 -->
+	<bean id="myAdvice" class="com.cheer.aop.advice.MyAdvice" parent="myLog"></bean>
+	<!-- 切入点 -->
+	<bean id="adviser" class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<!-- 指定Advice通知 -->
+		<property name="advice" ref="myAdvice"></property>
+		<!-- pattern的值使用正则表达式精确指定切入点, 将withAdviceMethod方法设为切入点 -->
+		<property name="pattern"
+			value="com\.cheer\.aop\.advice\.AOPServiceImpl\.withAdviceMethod"></property>
+	</bean>
+	<!-- 代理对象 返回实例是目标对象 target属性指定的aopService对象-->
+	<bean id="proxyService" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<!-- 设置目标（target）bean为 AOPservice，
+		多个bean可以设置list集合如-->
+		<property name="interceptorNames">
+			<value>adviser</value>
+		</property>
+		
+		<property name="target">
+			<ref bean="aopService" />
+		</property>
+	</bean>
+	
+	<!-- AspectJ -->
+	<!-- 目标对象 -->
+	<bean id="aopService1" class="com.cheer.aop.advice.aspectj.AOPServiceImpl" >
+		<property name="description" value=""></property>
+	</bean>
+	<bean id="myAspectjAdvice" class="com.cheer.aop.advice.aspectj.MyAspectjAdvice" ></bean>
+	<aop:config>
+		<!-- 定义切面 -->
+		<aop:aspect id="myAspect" ref="myAspectjAdvice">
+			<!-- 定义切点 -->
+			<aop:pointcut id="myPointCut" expression="execution(* com.cheer.aop.advice.aspectj.AOPServiceImpl.withAdviceMethod*(..))"></aop:pointcut>
+			<!-- 定义前置通知 -->
+			<aop:before pointcut-ref="myPointCut" method="beforeAdvice"/>
+			<!-- 定义后置通知 -->
+			<aop:after pointcut-ref="myPointCut" method="afterAdvice"/>
+			<!-- 定义成功返回后的通知 -->
+			<aop:after-returning pointcut-ref="myPointCut" method="afterReturnAdvice" returning="result"/>
+			<!-- 定义环绕通知 -->
+			<aop:around pointcut-ref="myPointCut" method="aroundAdvice"/>
+			<!-- 定义抛出异常后的通知 -->
+			<aop:after-throwing pointcut-ref="myPointCut" method="throwingAdvice" throwing="e"/>
+		</aop:aspect>
+	</aop:config>
+</beans>
