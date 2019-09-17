@@ -39,7 +39,7 @@ public class SpringJdbcTest {
 		assertNotNull(staff);
 	}
 
-	@Ignore
+	@Test
 	public void testQueryAllStaff() {
 		List<Staff> list = dao.queryAllStaff();
 		for (Staff staff : list) {
@@ -90,7 +90,7 @@ public class SpringJdbcTest {
 		assertEquals(1, count);
 	}
 	
-	@Test
+	@Ignore
 	public void testDeleteStaff() {
 		Staff staff = new Staff("张三",28,30000d);
 		staff.setId(800);
