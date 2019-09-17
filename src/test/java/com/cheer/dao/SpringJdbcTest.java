@@ -26,7 +26,7 @@ public class SpringJdbcTest {
 
 	@Ignore
 	public void testAddStaff() {
-		Staff staff = new Staff("张三", 22, 6500.00);
+		Staff staff = new Staff("张三", 22, 6500.00); 
 		int count = dao.addStaff(staff);
 		assertEquals(1, count);
 	}
