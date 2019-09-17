@@ -5,9 +5,7 @@ public class Staff {
 	private int id;
 
 	private String name;
-
 	private int age;
-
 	private double salary;
 
 	public Staff() {
@@ -52,4 +50,8 @@ public class Staff {
 		this.salary = salary;
 	}
 
+	@Override
+	public String toString() {
+		return "员工编号: " + this.id + "; 员工姓名: " + this.name + "; 员工年龄: " + this.age + "; 员工薪资: " + this.salary;
+	}
 }

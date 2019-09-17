@@ -48,7 +48,7 @@
 	<!-- AspectJ -->
 	<!-- 目标对象 -->
 	<bean id="aopService1" class="com.cheer.aop.advice.aspectj.AOPServiceImpl" >
-		<property name="description" value=""></property>
+		<property name="description" value="THIS IS THE DESCRIPTION"></property>
 	</bean>
 	<bean id="myAspectjAdvice" class="com.cheer.aop.advice.aspectj.MyAspectjAdvice" ></bean>
 	<aop:config>

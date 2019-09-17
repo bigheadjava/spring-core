@@ -25,7 +25,7 @@ public class MyAspectjAdvice {
 			result = (String) proceedingJoinPoint.proceed();
 			long end = System.currentTimeMillis();
 			System.out.println("执行环绕通知完毕...");
-			System.out.println("执行目标业务方法耗时: " + (end-start)/1000 + "秒");
+			System.out.println("执行目标业务方法耗时: " + (end-start) + "毫秒");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
