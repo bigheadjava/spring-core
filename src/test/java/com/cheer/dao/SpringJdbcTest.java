@@ -39,7 +39,7 @@ public class SpringJdbcTest {
 		assertNotNull(staff);
 	}
 
-	@Test
+	@Ignore
 	public void testQueryAllStaff() {
 		List<Staff> list = dao.queryAllStaff();
 		for (Staff staff : list) {
@@ -61,7 +61,7 @@ public class SpringJdbcTest {
 		System.out.println("本次查询到 " + count + " 条记录...");
 	}
 	
-	@Ignore
+	@Test
 	public void testQueryAllStaffCount() {
 		int count = dao.queryStaffCount(null, null, null);
 		System.out.println("本次查询到 " + count + " 条记录...");

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.object.SqlFunction;
 import org.springframework.stereotype.Repository;
 
 import com.cheer.dao.base.BaseDAO;
@@ -82,7 +83,11 @@ public class StaffDAOImpl extends BaseDAO implements IStaffDAO {
 
 	@Override
 	public int queryAllStaffCount() {
-		return queryStaffCount(null, null, null);
+		SqlFunction<Integer> sf = new SqlFunction<>(getJdbcTemplate().getDataSource(), "select count(*) from i_staff");
+		sf.compile();
+		return sf.run();
+		
+		//return queryStaffCount(null, null, null);
 	}
 
 	@Override
