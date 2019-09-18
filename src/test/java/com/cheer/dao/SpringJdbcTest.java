@@ -15,7 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.cheer.dao.bean.Staff;
 import com.cheer.dao.inter.IStaffDAO;
 
-public class SpringJdbcTest {
+public class SpringJdbcTest{
 
 	IStaffDAO dao;
 
