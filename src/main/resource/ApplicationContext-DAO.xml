@@ -3,34 +3,45 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
 
 	<context:component-scan base-package="com.cheer" />
-	
-	<context:property-placeholder location="classpath:properties/dev-env.properties"/>
-	
+
+	<context:property-placeholder
+		location="classpath:properties/dev-env.properties" />
+
 	<!-- 配置数据源 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${db.driver.name}">
 		</property>
 		<property name="url" value="${db.url}"></property>
-		<property name="username" value="${db.username}"> 
+		<property name="username" value="${db.username}">
 		</property>
 		<property name="password" value="${db.password}">
 		</property>
 	</bean>
-	
+
 	<!-- 配置事务管理器 -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-	
+
 	<!-- 配置业务层代理 -->
-	<bean id="accountServiceProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<!-- 配置目标对象 -->
+	<bean id="accountServiceProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<!-- 配置目标对象，要在哪个Bean上面创建事务代理对象 -->
 		<property name="target" ref="accountServiceImpl"></property>
 		<!-- 注入事务管理器 -->
 		<property name="transactionManager" ref="transactionManager"></property>
@@ -39,7 +50,8 @@
 			<props>
 				<prop key="transfer*">PROPAGATION_REQUIRED</prop>
 			</props>
+			
 		</property>
 	</bean>
-		
+	
 </beans>

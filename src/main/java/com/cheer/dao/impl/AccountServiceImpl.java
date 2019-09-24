@@ -19,7 +19,7 @@ public class AccountServiceImpl implements IAccountService {
 	public void transferAccount(Account fromAccount, Account toAccount, BigDecimal amount) {
 		fromAccount.setMoney(fromAccount.getMoney().subtract(new BigDecimal(String.valueOf(amount))));
 		dao.updateAccount(fromAccount);
-		
+		int i = 1/0;
 		toAccount.setMoney(toAccount.getMoney().add(new BigDecimal(String.valueOf(amount))));
 		dao.updateAccount(toAccount);
 	}

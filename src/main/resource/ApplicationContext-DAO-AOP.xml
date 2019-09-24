@@ -19,6 +19,9 @@
 
 	<context:property-placeholder
 		location="classpath:properties/dev-env.properties" />
+		
+	<!-- 自动为切面方法中匹配的方法所在的类生成代理对象 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
 	<!-- 配置数据源 -->
 	<bean id="dataSource"
@@ -37,21 +40,17 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-
-	<!-- 配置业务层代理 -->
-	<bean id="accountServiceProxy"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<!-- 配置目标对象，要在哪个Bean上面创建事务代理对象 -->
-		<property name="target" ref="accountServiceImpl"></property>
-		<!-- 注入事务管理器 -->
-		<property name="transactionManager" ref="transactionManager"></property>
-		<!-- 注入事务属性 -->
-		<property name="transactionAttributes">
-			<props>
-				<prop key="transfer*">PROPAGATION_REQUIRED</prop>
-			</props>
-			
-		</property>
-	</bean>
 	
+	<!-- 配置事务通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="transfer*" propagation="REQUIRED"/>
+			<tx:method name="save*" propagation="REQUIRED"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut id="pointCut" expression="execution(* com.cheer.dao.impl.*ServiceImpl.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut"/>
+	</aop:config>
 </beans>
